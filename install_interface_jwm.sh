@@ -9,7 +9,6 @@ echo "=========================================="
 # 1. INSTALAR PACOTES MÍNIMOS + PCManFM
 # ============================================
 echo "[1/5] Instalando pacotes..."
-sudo apt update
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
     jwm \
@@ -19,6 +18,7 @@ sudo apt install -y --no-install-recommends \
     wget \
     curl \
     tigervnc-standalone-server \
+    tightvncserver \
     feh 2>/dev/null
 
 # ============================================
@@ -273,3 +273,4 @@ echo "📊 STATUS: ~/jwm-status"
 echo "📁 ABRIR ARQUIVOS: ~/open-files"
 
 echo "=========================================="
+
