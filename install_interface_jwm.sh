@@ -199,7 +199,7 @@ cat > ~/startvnc << 'START'
 #!/bin/bash
 vncserver -kill :1 2>/dev/null
 vncserver :1 -geometry 1024x768 -depth 24 -localhost no
-echo "✅ VNC: $(curl -s ifconfig.me):5901"
+echo "✅ VNC: $(curl -s ifconfig.me):5900"
 echo "🔑 Senha: 123456"
 echo "📁 Gerenciador de arquivos: F2 ou Menu → Arquivos"
 START
@@ -223,7 +223,7 @@ echo "PCManFM: $(pgrep pcmanfm >/dev/null && echo ✅ || echo ❌)"
 echo "JWM: $(pgrep jwm >/dev/null && echo ✅ || echo ❌)"
 echo ""
 if pgrep Xvnc >/dev/null; then
-    echo "✅ VNC: $(curl -s ifconfig.me):5901"
+    echo "✅ VNC: $(curl -s ifconfig.me):5900"
 else
     echo "❌ VNC INATIVO"
 fi
@@ -266,9 +266,10 @@ echo "   • Copiar/Mover/Excluir arquivos"
 echo "   • Modo desktop disponível"
 echo ""
 echo "🔗 REALVNC VIEWER:"
-echo "   $(curl -s ifconfig.me):5901"
+echo "   $(curl -s ifconfig.me):5900"
 echo "   Senha: 123456"
 echo ""
 echo "📊 STATUS: ~/jwm-status"
 echo "📁 ABRIR ARQUIVOS: ~/open-files"
+
 echo "=========================================="
