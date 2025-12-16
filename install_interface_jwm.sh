@@ -22,14 +22,14 @@ cat > ~/.jwmrc << JWM
     <Clock format="%H:%M"/>
 </Tray>
 <RootMenu onroot="1" label="Menu">
-    <Program label="PCManFM">pcmanfm</Program>
+    <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
     <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
 <RootMenu onroot="3">
-    <Program label="PCManFM">pcmanfm</Program>
+    <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
     <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
@@ -66,4 +66,5 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
