@@ -1,6 +1,13 @@
 #install_interface_jwm.sh
 #!/bin/bash
-echo "Instalando pacotes..."
+
+echo "Atualizando pacotes..."
+sudo apt update
+
+# Corrigir hora
+sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
+
+echo "Instalando programas essenciais..."
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
     jwm \
@@ -12,9 +19,6 @@ sudo apt install -y --no-install-recommends \
 	tightvncserver \
     tigervnc-standalone-server \
     feh 2>/dev/null
-    
-# Corrigir hora
-sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
 
 CURRENT_USER=$(whoami)
 
@@ -48,7 +52,7 @@ cat > ~/.jwmrc << JWM
 </JWM>
 JWM
 
-echo "Configurando VNC com DPI 144..."
+echo "Configurando VNC..."
 mkdir -p ~/.vnc
 echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
 echo '#!/bin/bash
@@ -62,7 +66,7 @@ echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
 sleep 1
 vncserver :1 -geometry 1280x720 -dpi 144
-echo "✅ VNC iniciado com DPI 144"
+echo "✅ VNC iniciado"
 echo "Conecte em: $(hostname -I | awk "{print \$1}"):5901"
 echo "Senha: 123456"' > ~/startvnc
 chmod +x ~/startvnc
@@ -76,8 +80,3 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
-
-
-
-
