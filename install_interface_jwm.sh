@@ -17,7 +17,6 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
-    tigervnc-standalone-server \
     tightvncserver \
     feh 2>/dev/null
 
@@ -52,10 +51,6 @@ cat > ~/.jwmrc << 'JWM'
     <!-- GERENCIADOR DE ARQUIVOS -->
     <Menu label="📁 Arquivos" icon="folder.png">
         <Program label="PCManFM (Interface)" icon="file-manager.png">pcmanfm</Program>
-        <Program label="PCManFM Desktop" icon="desktop.png">pcmanfm --desktop</Program>
-        <Separator/>
-        <Program label="Midnight Commander" icon="terminal.png">xterm -e mc</Program>
-        <Program label="Listar Arquivos" icon="terminal.png">xterm -e ls -la</Program>
     </Menu>
     
     <!-- TERMINAIS -->
@@ -68,8 +63,6 @@ cat > ~/.jwmrc << 'JWM'
     <!-- SISTEMA -->
     <Menu label="⚙️ Sistema" icon="system.png">
         <Program label="📊 Monitor Sistema" icon="monitor.png">xterm -e htop</Program>
-        <Program label="💾 RAM: $(free -m | awk '/^Mem:/{print $3}')MB" icon="memory.png">xterm -e free -m</Program>
-        <Program label="🌐 IP: $(hostname -I | awk '{print $1}')" icon="network.png">xterm -e ip addr</Program>
         <Separator/>
         <Restart label="🔄 Reiniciar JWM" icon="refresh.png"/>
     </Menu>
@@ -85,9 +78,7 @@ cat > ~/.jwmrc << 'JWM'
     
     <!-- UTILIDADES -->
     <Menu label="🛠️ Utilitários" icon="tools.png">
-        <Program label="🎨 Mudar Wallpaper" icon="image.png">feh --randomize --bg-fill /usr/share/backgrounds/* 2>/dev/null || echo "Use: feh --bg-fill imagem.jpg"</Program>
         <Program label="📝 Editor de Texto" icon="editor.png">xterm -e nano</Program>
-        <Program label="🌐 Navegador Web" icon="browser.png">xterm -e lynx</Program>
         <Program label="🧹 Limpar Tela" icon="clean.png">clear</Program>
     </Menu>
     
@@ -282,5 +273,6 @@ echo ""
 echo "🍷  CONFIGURAR WINE"
 echo "    winecfg"
 echo "=========================================="
+
 
 
