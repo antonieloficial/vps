@@ -1,3 +1,4 @@
+#install_interface_jwm.sh
 #!/bin/bash
 echo "Instalando pacotes..."
 sudo apt install -y jwm pcmanfm xterm tigervnc-standalone-server
@@ -65,3 +66,4 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
