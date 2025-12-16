@@ -5,9 +5,6 @@ echo "  JWM + MENUS + BARRA + GERENCIADOR ARQUIVOS"
 echo "  Consumo: ~55MB RAM | Ubuntu 20.04"
 echo "=========================================="
 
-# Corrigir hora local
-sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc && echo "✅ Hora automaticamente corrigida!"
-
 # ============================================
 # 1. INSTALAR PACOTES MÍNIMOS + PCManFM
 # ============================================
@@ -20,6 +17,7 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
+    nano \
     tigervnc-standalone-server \
     feh 2>/dev/null
 
@@ -204,7 +202,7 @@ sudo mkdir -p /usr/share/backgrounds
 sudo sh -c 'echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" | base64 -d > /usr/share/backgrounds/default.png'
 
 # Instalar o Wine
-sudo rm -f /etc/apt/sources.list.d/*wine* 2>/dev/null && sudo dpkg --purge $(dpkg -l | awk '/wine/{print $2}' 2>/dev/null) 2>/dev/null && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install libwine:amd64 libwine:i386 wine64 wine32 -y --fix-broken && winecfg 2>/dev/null && echo "✅ Wine instalado e configurado!"
+# sudo rm -f /etc/apt/sources.list.d/*wine* 2>/dev/null && sudo dpkg --purge $(dpkg -l | awk '/wine/{print $2}' 2>/dev/null) 2>/dev/null && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install libwine:amd64 libwine:i386 wine64 wine32 -y --fix-broken && winecfg 2>/dev/null && echo "✅ Wine instalado e configurado!"
 
 # ============================================
 # 5. CRIAR SCRIPTS DE CONTROLE
@@ -272,6 +270,7 @@ echo ""
 echo "🍷  CONFIGURAR WINE"
 echo "    winecfg"
 echo "=========================================="
+
 
 
 
