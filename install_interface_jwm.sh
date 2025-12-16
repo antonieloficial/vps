@@ -77,7 +77,7 @@ cat > ~/.jwmrc << JWM
 <!-- MENU PRINCIPAL -->
 <RootMenu onroot="1" label="Menu">
     <Menu label="Arquivos">
-        <Program label="PCManFM (Interface)">pcmanfm</Program>
+        <Program label="PCManFM">pcmanfm</Program>
     </Menu>
 
     <Menu label="Sistema">
@@ -94,7 +94,7 @@ cat > ~/.jwmrc << JWM
     <Separator/>
 
     <Menu label="Sair">
-        <Program label="Reboot (Instancia)">sudo reboot</Program>
+        <Program label="Reboot">sudo reboot</Program>
         <Separator/>
         <Exit label="Logout" confirm="true"/>
     </Menu>
@@ -212,7 +212,7 @@ sleep 2
 
 # Iniciar novo VNC
 echo "Iniciando servidor VNC..."
-vncserver :1 -geometry 1280x720 -depth 24 -localhost no
+vncserver :1 -geometry 1280x720 -depth 24 -localhost no -dpi 144
 
 # Aguardar inicialização
 sleep 3
@@ -254,6 +254,9 @@ chmod +x ~/stopvnc
 # Wallpaper padrão
 sudo mkdir -p /usr/share/backgrounds
 sudo sh -c 'echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" | base64 -d > /usr/share/backgrounds/default.png'
+
+# Corrigir hora
+sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc && echo "✅ Hora automaticamente corrigida!"
 
 # ============================================
 # 5. SCRIPTS DE CONTROLE E AJUSTES
