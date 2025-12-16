@@ -20,7 +20,7 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
-    tightvncserver \
+    tigervnc-standalone-server \
     feh 2>/dev/null
 
 # ============================================
@@ -272,6 +272,7 @@ echo ""
 echo "🍷  CONFIGURAR WINE"
 echo "    winecfg"
 echo "=========================================="
+
 
 
 
