@@ -1,7 +1,7 @@
 #install_interface_jwm.sh
 #!/bin/bash
 echo "Instalando pacotes..."
-sudo apt install -y jwm pcmanfm xterm tigervnc-standalone-server
+sudo apt install -y jwm pcmanfm xterm tigervnc-standalone-server wget curl
 
 # Corrigir hora
 sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
@@ -66,5 +66,6 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
