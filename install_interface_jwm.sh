@@ -9,6 +9,7 @@ echo "=========================================="
 # 1. INSTALAR PACOTES MÍNIMOS + PCManFM
 # ============================================
 echo "[1/5] Instalando pacotes..."
+sudo apt update
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
     jwm \
@@ -17,17 +18,19 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
-    nano \
     tigervnc-standalone-server \
     feh 2>/dev/null
 
 # ============================================
-# 2. CONFIGURAR JWM COM PCManFM NO MENU
+# 2. CONFIGURAR JWM SEM EMOJIS
 # ============================================
-echo "[2/5] Configurando JWM com gerenciador de arquivos..."
+echo "[2/5] Configurando JWM..."
 mkdir -p ~/.jwm
 
-cat > ~/.jwmrc << 'JWM'
+# Obter nome do usuário atual
+CURRENT_USER=$(whoami)
+
+cat > ~/.jwmrc << JWM
 <?xml version="1.0"?>
 <JWM>
 
@@ -40,66 +43,55 @@ cat > ~/.jwmrc << 'JWM'
 
 <!-- BARRA DE TAREFAS -->
 <Tray x="0" y="-1" height="24" autohide="off">
-    <TrayButton label="≡">root:1</TrayButton>
+    <TrayButton label="Menu">root:1</TrayButton>
     <Spacer/>
     <TaskList/>
     <Spacer/>
+    <!-- NOME DO USUÁRIO SEM EMOJI -->
+    <TrayButton label="$CURRENT_USER"></TrayButton>
+    <!-- RELÓGIO -->
     <Clock format="%H:%M"/>
 </Tray>
 
-<!-- MENU PRINCIPAL (CLIQUE NO BOTÃO ≡) -->
+<!-- MENU PRINCIPAL SEM EMOJIS -->
 <RootMenu onroot="1" label="Menu">
     <!-- GERENCIADOR DE ARQUIVOS -->
-    <Menu label="📁 Arquivos" icon="folder.png">
-        <Program label="PCManFM (Interface)" icon="file-manager.png">pcmanfm</Program>
+    <Menu label="Arquivos">
+        <Program label="PCManFM (Interface)">pcmanfm</Program>
     </Menu>
-    
-    <!-- TERMINAIS -->
-    <Menu label="📟 Terminais" icon="terminal.png">
-        <Program label="XTerm" icon="terminal.png">xterm</Program>
-        <Program label="Terminal com Htop" icon="monitor.png">xterm -e htop</Program>
-        <Program label="Terminal Root" icon="root.png">xterm -e "sudo -i"</Program>
-    </Menu>
-    
+
     <!-- SISTEMA -->
-    <Menu label="⚙️ Sistema" icon="system.png">
-        <Program label="📊 Monitor Sistema" icon="monitor.png">xterm -e htop</Program>
-        <Separator/>
-        <Restart label="🔄 Reiniciar JWM" icon="refresh.png"/>
+    <Menu label="Sistema">
+        <Program label="Monitor Sistema">xterm -e htop</Program>
+        <Restart label="Reiniciar JWM"/>
     </Menu>
-    
-    <!-- VNC -->
-    <Menu label="🔌 VNC" icon="vnc.png">
-        <Program label="▶️ Iniciar VNC" icon="start.png">~/startvnc</Program>
-        <Program label="⏹️ Parar VNC" icon="stop.png">vncserver -kill :1</Program>
-        <Program label="📡 Status VNC" icon="info.png">~/jwm-status</Program>
-    </Menu>
-    
-    <Separator/>
-    
+
     <!-- UTILIDADES -->
-    <Menu label="🛠️ Utilitários" icon="tools.png">
-        <Program label="📝 Editor de Texto" icon="editor.png">xterm -e nano</Program>
-        <Program label="🧹 Limpar Tela" icon="clean.png">clear</Program>
+    <Menu label="Utilitarios">
+        <Program label="Editor de Texto">xterm -e nano</Program>
+        <Program label="Limpar Tela">clear</Program>
     </Menu>
-    
+
     <Separator/>
-    
-    <!-- SAIR -->
-    <Menu label="🚪 Sair" icon="exit.png">
-        <Exit label="Logout" confirm="true" icon="logout.png"/>
+
+    <!-- SAIR COM REBOOT -->
+    <Menu label="Sair">
+        <Program label="Reboot (Instancia)">sudo reboot</Program>
+        <Separator/>
+        <Exit label="Logout" confirm="true"/>
     </Menu>
 </RootMenu>
 
 <!-- MENU RÁPIDO (CLIQUE DIREITO) -->
 <RootMenu onroot="3">
-    <Program label="📁 Gerenciador de Arquivos">pcmanfm</Program>
-    <Program label="📟 Terminal">xterm</Program>
+    <Program label="Gerenciador de Arquivos">pcmanfm</Program>
+    <Program label="Terminal">xterm</Program>
     <Separator/>
-    <Program label="📊 Monitor Sistema">xterm -e htop</Program>
+    <Program label="Monitor Sistema">xterm -e htop</Program>
     <Separator/>
-    <Restart label="🔄 Reiniciar JWM"/>
-    <Exit label="🚪 Sair"/>
+    <Restart label="Reiniciar JWM"/>
+    <Program label="Reboot">sudo reboot</Program>
+    <Exit label="Sair"/>
 </RootMenu>
 
 <!-- ATALHOS DE TECLADO -->
@@ -110,12 +102,12 @@ cat > ~/.jwmrc << 'JWM'
 <Key key="F5">exec:jwm -restart</Key>
 <Key key="Alt+Tab">next</Key>
 <Key key="Alt+F4">close</Key>
-<Key key="Print">exec:scrot screenshot_%Y-%m-%d_%H-%M-%S.png</Key>
+<Key key="Print">exec:scrot screenshot_%Y-%m-d_%H-%M-%S.png</Key>
 
 <!-- 2 ÁREAS DE TRABALHO -->
 <Desktops width="2" height="1">
-    <Desktop name="📁 Arquivos"/>
-    <Desktop name="📟 Terminal"/>
+    <Desktop name="Arquivos"/>
+    <Desktop name="Terminal"/>
 </Desktops>
 
 <!-- REGRAS PARA APLICATIVOS -->
@@ -191,7 +183,7 @@ cat > ~/startvnc << 'START'
 #!/bin/bash
 vncserver -kill :1 2>/dev/null
 vncserver :1 -geometry 1024x768 -depth 24 -localhost no
-echo "✅ VNC: $(curl -s ifconfig.me):5900"
+echo "✅ VNC: $(curl -s ifconfig.me):5901"
 echo "🔑 Senha: 123456"
 echo "📁 Gerenciador de arquivos: F2 ou Menu → Arquivos"
 START
@@ -200,9 +192,6 @@ chmod +x ~/startvnc
 # Baixar wallpaper padrão
 sudo mkdir -p /usr/share/backgrounds
 sudo sh -c 'echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" | base64 -d > /usr/share/backgrounds/default.png'
-
-# Instalar o Wine
-# sudo rm -f /etc/apt/sources.list.d/*wine* 2>/dev/null && sudo dpkg --purge $(dpkg -l | awk '/wine/{print $2}' 2>/dev/null) 2>/dev/null && sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install libwine:amd64 libwine:i386 wine64 wine32 -y --fix-broken && winecfg 2>/dev/null && echo "✅ Wine instalado e configurado!"
 
 # ============================================
 # 5. CRIAR SCRIPTS DE CONTROLE
@@ -218,7 +207,7 @@ echo "PCManFM: $(pgrep pcmanfm >/dev/null && echo ✅ || echo ❌)"
 echo "JWM: $(pgrep jwm >/dev/null && echo ✅ || echo ❌)"
 echo ""
 if pgrep Xvnc >/dev/null; then
-    echo "✅ VNC: $(curl -s ifconfig.me):5900"
+    echo "✅ VNC: $(curl -s ifconfig.me):5901"
 else
     echo "❌ VNC INATIVO"
 fi
@@ -248,11 +237,15 @@ echo "🚀 PARA INICIAR VNC:"
 echo "   ~/startvnc"
 echo ""
 echo "🎮 CONTROLES PRINCIPAIS:"
-echo "   • Botão '≡' na barra → Menu completo"
+echo "   • Botão 'Menu' na barra → Menu completo"
 echo "   • Clique direito na área → Menu rápido"
 echo "   • F1 → Menu, F2 → Gerenciador de Arquivos"
 echo "   • F3 → Terminal, F5 → Reiniciar JWM"
-echo "   • Menu → Arquivos → PCManFM"
+echo "   • Menu → Sair → Reboot (Instancia)"
+echo ""
+echo "⚠️  ATENÇÃO:"
+echo "   • 'Reboot (Instancia)' reinicia TODO o sistema"
+echo "   • 'Reiniciar JWM' só reinicia a interface"
 echo ""
 echo "📁 GERENCIADOR DE ARQUIVOS:"
 echo "   • Interface gráfica completa"
@@ -261,19 +254,9 @@ echo "   • Copiar/Mover/Excluir arquivos"
 echo "   • Modo desktop disponível"
 echo ""
 echo "🔗 REALVNC VIEWER:"
-echo "   $(curl -s ifconfig.me):5900"
+echo "   $(curl -s ifconfig.me):5901"
 echo "   Senha: 123456"
 echo ""
 echo "📊 STATUS: ~/jwm-status"
 echo "📁 ABRIR ARQUIVOS: ~/open-files"
-echo ""
-echo "🍷  CONFIGURAR WINE"
-echo "    winecfg"
 echo "=========================================="
-
-
-
-
-
-
-
