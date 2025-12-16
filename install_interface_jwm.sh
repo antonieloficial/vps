@@ -1,5 +1,8 @@
-#install_interface_jwm.sh
 #!/bin/bash
+# install_interface_jwm.shh - VERSÃO FINAL
+echo "==========================================="
+echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
+echo "==========================================="
 
 echo "Atualizando pacotes..."
 sudo apt update
@@ -80,3 +83,4 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
