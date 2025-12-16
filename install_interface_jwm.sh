@@ -5,6 +5,9 @@ echo "  JWM + MENUS + BARRA + GERENCIADOR ARQUIVOS"
 echo "  Consumo: ~55MB RAM | Ubuntu 20.04"
 echo "=========================================="
 
+# Corrigir hora local
+sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc && echo "✅ Hora automaticamente corrigida!"
+
 # ============================================
 # 1. INSTALAR PACOTES MÍNIMOS + PCManFM
 # ============================================
@@ -269,6 +272,7 @@ echo ""
 echo "🍷  CONFIGURAR WINE"
 echo "    winecfg"
 echo "=========================================="
+
 
 
 
