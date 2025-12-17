@@ -32,21 +32,35 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 echo.
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << JWM
+cat > ~/.jwmrc << 'JWM'
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    <Dock>
-        <Button width="36" height="36">
+    <!-- ÁREA DE TAREFAS - APENAS ÍCONES -->
+    <TaskList>
+        <Button maxwidth="36">
             <Icon/>
+            <Text></Text>
         </Button>
-    </Dock>
+    </TaskList>
     <Spacer/>
-    <TrayButton label="$CURRENT_USER"/>
+    <TrayButton label="'$CURRENT_USER'"/>
     <Clock format="%H:%M"/>
 </Tray>
+
+<!-- CONFIGURAÇÃO GLOBAL PARA APENAS ÍCONES -->
+<Group>
+    <Name>*</Name>
+    <Option>nolist</Option>
+    <TaskStyle>
+        <Font>-*-*-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+        <Foreground>#00000000</Foreground>
+        <ActiveForeground>#00000000</ActiveForeground>
+    </TaskStyle>
+</Group>
+
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
     <Program label="Nano">xterm -e nano</Program>
@@ -56,6 +70,14 @@ cat > ~/.jwmrc << JWM
     <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
+
+<!-- FORÇAR ESTILO APENAS-ÍCONES -->
+<Style name="TaskList">
+    <Font>fixed</Font>
+</Style>
+<Style name="Button">
+    <Font>fixed</Font>
+</Style>
 </JWM>
 JWM
 
