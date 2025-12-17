@@ -32,17 +32,20 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 echo.
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << JWM
+
+# CORREÇÃO: Usar cat com EOF para expandir variável corretamente
+cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     
-    <!-- BARRA DE TAREFAS APENAS COM ÍCONES - CONFIGURAÇÃO CORRETA -->
-    <TaskList maxwidth="200">
-        <Button width="36">
+    <!-- SOLUÇÃO DEFINITIVA PARA APENAS ÍCONES -->
+    <TaskList>
+        <Button width="40" height="36">
             <Icon/>
+            <Text></Text>
         </Button>
     </TaskList>
     
@@ -50,6 +53,16 @@ cat > ~/.jwmrc << JWM
     <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
+
+<!-- CONFIGURAÇÃO GLOBAL PARA OCULTAR TEXTO -->
+<Group>
+    <Class>*</Class>
+    <TaskStyle>
+        <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+        <Foreground>#00000000</Foreground>
+        <ActiveForeground>#00000000</ActiveForeground>
+    </TaskStyle>
+</Group>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
@@ -60,16 +73,8 @@ cat > ~/.jwmrc << JWM
     <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
-
-<!-- ESTILO GLOBAL PARA REMOVER TEXTO DA BARRA DE TAREFAS -->
-<Style name="TaskList">
-    <Font>fixed</Font>
-    <Foreground>black</Foreground>
-    <ActiveForeground>black</ActiveForeground>
-</Style>
-
 </JWM>
-JWM
+EOF
 
 echo "Configurando VNC..."
 echo.
