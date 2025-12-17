@@ -39,9 +39,8 @@ cat > ~/.jwmrc << JWM
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     <TaskList>
-        <Button>
-            <Width>36</Width>
-            <Height>36</Height>
+        <Button maxwidth="40">
+            <Icon/>
         </Button>
     </TaskList>
     <Spacer/>
