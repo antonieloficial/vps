@@ -3,7 +3,7 @@
 echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
 echo "==========================================="
-echo.
+echo
 echo "Atualizando pacotes e otimizando o sistema..."
 echo.
 sudo apt update
@@ -24,8 +24,8 @@ sudo apt install -y --no-install-recommends \
     curl \
 	x11-xserver-utils \
 	tightvncserver \
-    tigervnc-standalone-server \
-    feh 2>/dev/null
+	tigervnc-standalone-server \
+	feh 2>/dev/null
 
 CURRENT_USER=$(whoami)
 
@@ -40,22 +40,16 @@ cat > ~/.jwmrc << JWM
     <Spacer/>
     <TaskList/>
     <Spacer/>
-    <TrayButton label="$CURRENT_USER">root:3</TrayButton>
     <Clock format="%H:%M"/>
 </Tray>
 <RootMenu onroot="1" label="Menu">
+    <Program label="Htop">xterm -e htop</Program>
+    <Program label="Nano">xterm -e nano</Program>
     <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
     <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
-</RootMenu>
-<RootMenu onroot="3">
-    <Program label="PCManFM">pcmanfm /home</Program>
-    <Program label="Terminal">xterm</Program>
-    <Restart label="Reiniciar JWM"/>
-    <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
-    <Exit label="Sair" confirm="true"/>
 </RootMenu>
 </JWM>
 JWM
@@ -90,4 +84,3 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
