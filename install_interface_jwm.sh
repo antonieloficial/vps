@@ -3,8 +3,9 @@
 echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
 echo "==========================================="
-
+echo.
 echo "Atualizando pacotes e otimizando o sistema..."
+echo.
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
 
@@ -12,6 +13,7 @@ sudo apt purge plymouth snapd modemmanager -y
 sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
 
 echo "Instalando programas essenciais..."
+echo.
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
     jwm \
@@ -27,6 +29,7 @@ sudo apt install -y --no-install-recommends \
 CURRENT_USER=$(whoami)
 
 echo "Configurando JWM..."
+echo.
 mkdir -p ~/.jwm
 cat > ~/.jwmrc << JWM
 <?xml version="1.0"?>
@@ -57,6 +60,7 @@ cat > ~/.jwmrc << JWM
 JWM
 
 echo "Configurando VNC..."
+echo.
 mkdir -p ~/.vnc
 echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
 echo '#!/bin/bash
@@ -66,6 +70,7 @@ exec jwm' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
 
 echo "Criando script de inicialização..."
+echo.
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
 sleep 1
@@ -85,6 +90,7 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
