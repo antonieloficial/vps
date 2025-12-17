@@ -38,28 +38,23 @@ cat > ~/.jwmrc << 'JWM'
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    <!-- ÁREA DE TAREFAS - APENAS ÍCONES -->
+    <!-- BARRA DE TAREFAS APENAS COM ÍCONES -->
     <TaskList>
+        <TaskListStyle>
+            <Font>-*-fixed-*-*-*-*-1-*-*-*-*-*-*-*</Font>
+            <ActiveForeground>white</ActiveForeground>
+            <ActiveBackground>#505050</ActiveBackground>
+            <Foreground>#CCCCCC</Foreground>
+            <Background>#303030</Background>
+        </TaskListStyle>
         <Button maxwidth="36">
             <Icon/>
-            <Text></Text>
         </Button>
     </TaskList>
     <Spacer/>
     <TrayButton label="'$CURRENT_USER'"/>
     <Clock format="%H:%M"/>
 </Tray>
-
-<!-- CONFIGURAÇÃO GLOBAL PARA APENAS ÍCONES -->
-<Group>
-    <Name>*</Name>
-    <Option>nolist</Option>
-    <TaskStyle>
-        <Font>-*-*-*-*-*-*-0-*-*-*-*-*-*-*</Font>
-        <Foreground>#00000000</Foreground>
-        <ActiveForeground>#00000000</ActiveForeground>
-    </TaskStyle>
-</Group>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
@@ -70,14 +65,6 @@ cat > ~/.jwmrc << 'JWM'
     <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
-
-<!-- FORÇAR ESTILO APENAS-ÍCONES -->
-<Style name="TaskList">
-    <Font>fixed</Font>
-</Style>
-<Style name="Button">
-    <Font>fixed</Font>
-</Style>
 </JWM>
 JWM
 
