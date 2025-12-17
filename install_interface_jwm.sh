@@ -61,6 +61,7 @@ mkdir -p ~/.vnc
 echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
 echo '#!/bin/bash
 xrandr --dpi 144
+vncserver :1 -geometry 1280x720 -dpi 144
 pcmanfm --desktop &
 exec jwm' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
@@ -85,6 +86,7 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
