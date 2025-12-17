@@ -82,14 +82,14 @@ chmod +x ~/startvnc
 
 # Inicializar vncserver com o sistema
 echo "@reboot sleep 10 && /usr/bin/vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
+grep -q "alias vncserver=" ~/.bashrc || echo "alias vncserver='vncserver :1 -geometry 1280x720 -dpi 144'" >> ~/.bashrc && source ~/.bashrc
 
-cd 
 vncserver -kill :1
-vncserver -kill :2
 vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
