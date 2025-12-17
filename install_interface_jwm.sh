@@ -74,6 +74,7 @@ echo.
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
 sleep 1
+grep -q "alias vncserver=" ~/.bashrc || echo "alias vncserver='vncserver :1 -geometry 1280x720 -dpi 144'" >> ~/.bashrc && source ~/.bashrc
 vncserver :1 -geometry 1280x720 -dpi 144
 echo "✅ VNC iniciado"
 echo "Conecte em: $(hostname -I | awk "{print \$1}"):5901"
@@ -82,13 +83,13 @@ chmod +x ~/startvnc
 
 # Inicializar vncserver com o sistema
 echo "@reboot sleep 10 && /usr/bin/vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
-grep -q "alias vncserver=" ~/.bashrc || echo "alias vncserver='vncserver :1 -geometry 1280x720 -dpi 144'" >> ~/.bashrc && source ~/.bashrc
 
 vncserver -kill :1
 vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
