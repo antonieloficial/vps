@@ -25,31 +25,82 @@ sudo apt install -y --no-install-recommends \
     x11-xserver-utils \
     tightvncserver \
     tigervnc-standalone-server \
-    feh 2>/dev/null
+    feh \
+    wmctrl 2>/dev/null  # ADICIONADO: para controle de janelas
 
 CURRENT_USER=$(whoami)
 
 echo "Configurando JWM..."
 echo.
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << JWM
+
+# Criar script para gerenciar ícones da barra
+cat > ~/.jwm/taskbar-icons.sh << 'EOF'
+#!/bin/bash
+# Script para criar ícones dinâmicos na barra
+while true; do
+    # Obter lista de janelas abertas
+    WINDOWS=$(wmctrl -l | awk '{$3=""; $2=""; $1=""; print $0}' | sed 's/^ *//')
+    
+    # Aqui você poderia criar ícones dinâmicos se necessário
+    # Por enquanto, vamos confiar no JWM para isso
+    sleep 5
+done
+EOF
+chmod +x ~/.jwm/taskbar-icons.sh
+
+# CONFIGURAÇÃO PRINCIPAL DO JWM
+cat > ~/.jwmrc << 'JWM'
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     
-    <!-- SOLUÇÃO DEFINITIVA: Pager como barra de tarefas -->
-    <Pager labeled="false">
-        <Button width="36" height="36">
+    <!-- SOLUÇÃO DEFINITIVA: TaskList configurado CORRETAMENTE -->
+    <TaskList>
+        <!-- Configuração ESPECÍFICA para JWM 2.3.7 -->
+        <TaskListStyle>
+            <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+            <Foreground>#00000000</Foreground>
+            <ActiveForeground>#00000000</ActiveForeground>
+            <Background>#333333</Background>
+            <ActiveBackground>#555555</ActiveBackground>
+        </TaskListStyle>
+        
+        <!-- Botão MÍNIMO - APENAS ÍCONE -->
+        <Button width="36" height="36" border="false">
             <Icon/>
+            <!-- Texto EXPLICITAMENTE VAZIO e com offset negativo -->
+            <Text x="-100" y="-100"> </Text>
         </Button>
-    </Pager>
+    </TaskList>
     
     <Spacer/>
-    <TrayButton label="$CURRENT_USER"/>
+    <TrayButton label="'$CURRENT_USER'"/>
     <Clock format="%H:%M"/>
 </Tray>
+
+<!-- CONFIGURAÇÃO GLOBAL RADICAL -->
+<Group>
+    <Class>*</Class>
+    <Name>*</Name>
+    <Option>notitle</Option>
+    <TaskStyle>
+        <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+        <Foreground>#00000000</Foreground>
+        <ActiveForeground>#00000000</ActiveForeground>
+    </TaskStyle>
+</Group>
+
+<!-- DESATIVAR COMPLETAMENTE TEXTO EM BOTÕES -->
+<Style name="Button">
+    <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+</Style>
+
+<Style name="TaskList.Button">
+    <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+</Style>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
