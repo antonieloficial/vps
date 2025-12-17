@@ -22,39 +22,27 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
-    x11-xserver-utils \
-    tightvncserver \
-    tigervnc-standalone-server \
-    feh 2>/dev/null
+	x11-xserver-utils \
+	tightvncserver \
+	tigervnc-standalone-server \
+	feh 2>/dev/null
 
 CURRENT_USER=$(whoami)
 
 echo "Configurando JWM..."
 echo.
 mkdir -p ~/.jwm
-
-# CONFIGURAÇÃO COM TEXTO LIMITADO A 3 CARACTERES
-cat > ~/.jwmrc << EOF
+cat > ~/.jwmrc << JWM
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    
-    <!-- BARRA COM ÍCONE + 3 CARACTERES DO NOME -->
-    <TaskList>
-        <Button width="80">
-            <Icon/>
-            <!-- Texto limitado a 3 caracteres -->
-            <Text maxwidth="30">...</Text>
-        </Button>
-    </TaskList>
-    
+    <TaskList/>
     <Spacer/>
-    <TrayButton label="$CURRENT_USER"/>
+	<TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
-
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
     <Program label="Nano">xterm -e nano</Program>
@@ -65,7 +53,7 @@ cat > ~/.jwmrc << EOF
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
 </JWM>
-EOF
+JWM
 
 echo "Configurando VNC..."
 echo.
