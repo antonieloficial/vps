@@ -22,10 +22,10 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
-	x11-xserver-utils \
-	tightvncserver \
-	tigervnc-standalone-server \
-	feh 2>/dev/null
+    x11-xserver-utils \
+    tightvncserver \
+    tigervnc-standalone-server \
+    feh 2>/dev/null
 
 CURRENT_USER=$(whoami)
 
@@ -40,7 +40,7 @@ cat > ~/.jwmrc << JWM
     <Spacer/>
     <TaskList/>
     <Spacer/>
-	<TrayButton label="$CURRENT_USER"/>
+    <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
 <RootMenu onroot="1" label="Menu">
@@ -49,7 +49,7 @@ cat > ~/.jwmrc << JWM
     <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
-    <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
+    <Program label="Reboot Instância" confirm="Deseja realmente reiniciar a instância?">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
 </JWM>
