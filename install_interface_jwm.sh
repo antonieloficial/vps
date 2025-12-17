@@ -82,13 +82,14 @@ echo "Senha: 123456"' > ~/startvnc
 chmod +x ~/startvnc
 
 # Inicializar vncserver com o sistema
-echo "@reboot sleep 10 && /usr/bin/vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
+echo "@reboot sleep 10 && vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
 
 vncserver -kill :1
-vncserver
+vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
