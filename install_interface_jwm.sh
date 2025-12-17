@@ -40,6 +40,7 @@ cat > ~/.jwmrc << JWM
     <Spacer/>
     <TaskList/>
     <Spacer/>
+	<TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
 <RootMenu onroot="1" label="Menu">
@@ -84,3 +85,4 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
