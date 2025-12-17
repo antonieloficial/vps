@@ -33,7 +33,7 @@ echo "Configurando JWM..."
 echo.
 mkdir -p ~/.jwm
 
-# CORREÇÃO: Usar cat com EOF para expandir variável corretamente
+# CONFIGURAÇÃO COM TEXTO LIMITADO A 3 CARACTERES
 cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
@@ -41,11 +41,12 @@ cat > ~/.jwmrc << EOF
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     
-    <!-- SOLUÇÃO DEFINITIVA PARA APENAS ÍCONES -->
+    <!-- BARRA COM ÍCONE + 3 CARACTERES DO NOME -->
     <TaskList>
-        <Button width="40" height="36">
+        <Button width="80">
             <Icon/>
-            <Text></Text>
+            <!-- Texto limitado a 3 caracteres -->
+            <Text maxwidth="30">...</Text>
         </Button>
     </TaskList>
     
@@ -53,16 +54,6 @@ cat > ~/.jwmrc << EOF
     <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
-
-<!-- CONFIGURAÇÃO GLOBAL PARA OCULTAR TEXTO -->
-<Group>
-    <Class>*</Class>
-    <TaskStyle>
-        <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
-        <Foreground>#00000000</Foreground>
-        <ActiveForeground>#00000000</ActiveForeground>
-    </TaskStyle>
-</Group>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
