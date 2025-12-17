@@ -22,10 +22,10 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
-	x11-xserver-utils \
-	tightvncserver \
-	tigervnc-standalone-server \
-	feh 2>/dev/null
+    x11-xserver-utils \
+    tightvncserver \
+    tigervnc-standalone-server \
+    feh 2>/dev/null
 
 CURRENT_USER=$(whoami)
 
@@ -38,9 +38,14 @@ cat > ~/.jwmrc << JWM
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    <TaskList/>
+    <TaskList>
+        <Button>
+            <Width>36</Width>
+            <Height>36</Height>
+        </Button>
+    </TaskList>
     <Spacer/>
-	<TrayButton label="$CURRENT_USER"/>
+    <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
 <RootMenu onroot="1" label="Menu">
@@ -85,4 +90,3 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
