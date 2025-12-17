@@ -32,29 +32,35 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 echo.
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << 'JWM'
+cat > ~/.jwmrc << JWM
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    <!-- BARRA DE TAREFAS APENAS COM ÍCONES -->
+    <!-- CONFIGURAÇÃO PARA JWM 2.3.7-3 - APENAS ÍCONES -->
     <TaskList>
-        <TaskListStyle>
-            <Font>-*-fixed-*-*-*-*-1-*-*-*-*-*-*-*</Font>
-            <ActiveForeground>white</ActiveForeground>
-            <ActiveBackground>#505050</ActiveBackground>
-            <Foreground>#CCCCCC</Foreground>
-            <Background>#303030</Background>
-        </TaskListStyle>
-        <Button maxwidth="36">
+        <Button width="36" height="36">
             <Icon/>
         </Button>
     </TaskList>
     <Spacer/>
-    <TrayButton label="'$CURRENT_USER'"/>
+    <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
+
+<!-- ESTILO GLOBAL PARA OCULTAR TEXTO NO JWM 2.3.7-3 -->
+<Group>
+    <Class>*</Class>
+    <Option>notitle</Option>
+</Group>
+
+<!-- ESTILO ESPECÍFICO PARA TASKLIST -->
+<Style name="TaskList">
+    <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+    <Foreground>#00000000</Foreground>
+    <ActiveForeground>#00000000</ActiveForeground>
+</Style>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
