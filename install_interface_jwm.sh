@@ -22,6 +22,7 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     curl \
+	x11-xserver-utils \
 	tightvncserver \
     tigervnc-standalone-server \
     feh 2>/dev/null
@@ -89,3 +90,4 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
