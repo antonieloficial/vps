@@ -89,12 +89,3 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
-
-
-
-
-
-
-
-
