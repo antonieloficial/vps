@@ -38,29 +38,18 @@ cat > ~/.jwmrc << JWM
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    <!-- CONFIGURAÇÃO PARA JWM 2.3.7-3 - APENAS ÍCONES -->
-    <TaskList>
+    
+    <!-- SOLUÇÃO DEFINITIVA: Pager como barra de tarefas -->
+    <Pager labeled="false">
         <Button width="36" height="36">
             <Icon/>
         </Button>
-    </TaskList>
+    </Pager>
+    
     <Spacer/>
     <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
-
-<!-- ESTILO GLOBAL PARA OCULTAR TEXTO NO JWM 2.3.7-3 -->
-<Group>
-    <Class>*</Class>
-    <Option>notitle</Option>
-</Group>
-
-<!-- ESTILO ESPECÍFICO PARA TASKLIST -->
-<Style name="TaskList">
-    <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
-    <Foreground>#00000000</Foreground>
-    <ActiveForeground>#00000000</ActiveForeground>
-</Style>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
