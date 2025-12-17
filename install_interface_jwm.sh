@@ -4,8 +4,9 @@ echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
 echo "==========================================="
 
-echo "Atualizando pacotes..."
+echo "Atualizando pacotes e otimizando o sistema..."
 sudo apt update
+sudo apt purge plymouth snapd modemmanager -y
 
 # Corrigir hora
 sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
@@ -83,4 +84,5 @@ vncserver
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
