@@ -39,9 +39,21 @@ cat > ~/.jwmrc << JWM
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     <TaskList>
-        <Button maxwidth="40">
+        <!-- Estilo que minimiza texto -->
+        <TaskListStyle>
+            <Font>-*-fixed-*-*-*-*-1-*-*-*-*-*-*-*</Font>
+        </TaskListStyle>
+        
+        <!-- Botão que mostra apenas ícone -->
+        <Button maxwidth="40" border="false">
             <Icon/>
+            <Text></Text>
         </Button>
+        
+        <!-- Override global para ocultar texto -->
+        <Style name="TaskList">
+            <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+        </Style>
     </TaskList>
     <Spacer/>
     <TrayButton label="$CURRENT_USER"/>
