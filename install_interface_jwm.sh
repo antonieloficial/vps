@@ -64,7 +64,6 @@ EOF
 echo "Configurando VNC mínimo..."
 mkdir -p ~/.vnc
 echo "123456" | vncpasswd -f > ~/.vnc/passwd 2>/dev/null
-vncpasswd
 chmod 600 ~/.vnc/passwd
 echo '#!/bin/sh
 exec jwm' > ~/.vnc/xstartup
@@ -94,4 +93,5 @@ echo "🔍 VERIFICAÇÃO FINAL:"
 echo "Nome configurado na barra: '$CURRENT_USER'"
 echo "Para aplicar: pkill -HUP jwm"
 echo "Teste: xterm &"
+
 
