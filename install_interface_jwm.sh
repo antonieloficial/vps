@@ -38,7 +38,7 @@ mkdir -p ~/.jwm
 cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
-<RootButtons></RootButtons> <!-- CORREÇÃO: Remove ação de clique na área de trabalho -->
+<RootButtons></RootButtons> <!-- Desabilita cliques na área de trabalho -->
 
 <!-- BARRA DE TAREFAS FUNCIONAL -->
 <Tray x="0" y="-1" height="36" autohide="off">
@@ -51,7 +51,7 @@ cat > ~/.jwmrc << EOF
 </Tray>
 
 <!-- MENU PRINCIPAL -->
-<RootMenu onroot="1" label="Menu">
+<RootMenu label="Menu"> <!-- REMOVIDO: onroot="1" -->
     <Program label="Htop">xterm -e htop</Program>
     <Program label="Nano">xterm -e nano</Program>
     <Program label="PCManFM">pcmanfm /home</Program>
