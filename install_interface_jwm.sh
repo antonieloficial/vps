@@ -33,7 +33,7 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << EOF
+cat > ~/.jwmrc << "EOF"
 <?xml version="1.0"?>
 <JWM>
 <!-- BARRA DE TAREFAS FUNCIONAL -->
