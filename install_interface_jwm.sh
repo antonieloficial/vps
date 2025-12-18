@@ -8,7 +8,7 @@ echo "Atualizando pacotes e otimizando o sistema..."
 echo.
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
-
+vncserver -kill :1
 # Corrigir hora
 sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
 
@@ -106,3 +106,4 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
