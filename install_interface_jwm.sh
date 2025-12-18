@@ -1,5 +1,5 @@
 #!/bin/bash
-# install_interface_jwm.shh - VERSÃO MÍNIMA
+# install_interface_jwm.sh - VERSÃO CORRIGIDA
 echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO MÍNIMA  "
 echo "==========================================="
@@ -33,17 +33,20 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << JWM
+cat > ~/.jwmrc << 'JWM'
 <?xml version="1.0"?>
 <JWM>
-<Tray x="0" y="-1" height="40">
+<!-- BARRA DE TAREFAS FUNCIONAL -->
+<Tray x="0" y="-1" height="36" autohide="off">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     <TaskList/>
     <Spacer/>
-    <TrayButton label="$CURRENT_USER"/>
+    <TrayButton label="'$CURRENT_USER'"/>
     <Clock format="%H:%M"/>
 </Tray>
+
+<!-- MENU PRINCIPAL -->
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
     <Program label="Nano">xterm -e nano</Program>
@@ -84,8 +87,3 @@ else
     echo "JWM (compilação mínima)"
 fi
 echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
-
-
-
-
-
