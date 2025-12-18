@@ -26,7 +26,7 @@ sudo apt install -y --no-install-recommends \
     feh 2>/dev/null
 
 # INSTALAÇÃO MÍNIMA DO JWM 2.4.2
-wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz && tar -xf jwm-2.4.2.tar.xz && cd jwm-2.4.2 && ./configure --prefix=/usr --disable-nls --disable-debug --disable-xft --disable-jpeg --disable-png --disable-xpm --disable-xinerama && make CFLAGS="-Os -s" -j2 && sudo make install && cd /tmp && rm -rf jwm-2.4.2* && echo "✅ JWM $(jwm -version 2>&1 | head -1) instalado. Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
+wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz && tar -xf jwm-2.4.2.tar.xz && cd jwm-2.4.2 && ./configure --prefix=/usr --disable-nls --disable-debug --disable-xft --disable-jpeg --disable-png --disable-xpm --disable-xinerama && make CFLAGS="-Os -s" -j2 && sudo make install && cd /tmp && rm -rf jwm-2.4.2* && echo "✅ JWM instalado"
 
 CURRENT_USER=$(whoami)
 
@@ -83,6 +83,7 @@ else
     echo "JWM (compilação mínima)"
 fi
 echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
+
 
 
 
