@@ -22,6 +22,8 @@ sudo apt install -y --no-install-recommends \
     htop \
     wget \
     xz-utils \
+    xfonts-base \
+    fontconfig \
     tightvncserver \
     feh 2>/dev/null
 
@@ -93,5 +95,6 @@ echo "🔍 VERIFICAÇÃO FINAL:"
 echo "Nome configurado na barra: '$CURRENT_USER'"
 echo "Para aplicar: pkill -HUP jwm"
 echo "Teste: xterm &"
+
 
 
