@@ -49,7 +49,9 @@ cat > ~/.jwmrc << JWM
     <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
-    <Program label="Reboot Instância" confirm="Deseja realmente reiniciar a instância?">sudo reboot</Program>
+    <Menu label="Sistema">
+        <Program label="Reiniciar Instância" confirm="Deseja realmente reiniciar a instância?">sudo reboot</Program>
+    </Menu>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
 </JWM>
