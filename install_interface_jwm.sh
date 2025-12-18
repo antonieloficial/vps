@@ -57,8 +57,10 @@ cat > ~/.jwmrc << EOF
     <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
-    <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
-    <Exit label="Logout" confirm="true"/>
+    <Menu label="Sistema">
+        <Program label="Reiniciar" confirm="true">sudo reboot</Program>
+        <Exit label="Logout" confirm="true"/>
+    </Menu>
 </RootMenu>
 </JWM>
 EOF
@@ -91,3 +93,4 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
