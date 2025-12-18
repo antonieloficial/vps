@@ -1,31 +1,42 @@
 #!/bin/bash
-# install_interface_jwm.shh - VERSÃO FINAL
+# install_interface_jwm.shh - VERSÃO MÍNIMA
 echo "==========================================="
-echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
+echo " Interface JWM + VNC - INSTALAÇÃO MÍNIMA  "
 echo "==========================================="
 echo
-echo "Atualizando pacotes e otimizando o sistema..."
+echo "Atualizando pacotes..."
 echo.
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
 
-# Corrigir hora
-sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
+# Corrigir hora (sem curl pesado)
+sudo timedatectl set-timezone America/Sao_Paulo 2>/dev/null || true
+sudo timedatectl set-ntp true
 
-echo "Instalando programas essenciais..."
+echo "Instalando programas mínimos..."
 echo.
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
-    jwm \
     pcmanfm \
     xterm \
     htop \
     wget \
-    curl \
     x11-xserver-utils \
     tightvncserver \
-    tigervnc-standalone-server \
     feh 2>/dev/null
+
+# INSTALAÇÃO MÍNIMA DO JWM 2.4.2
+echo "Instalando JWM 2.4.2 mínimo..."
+cd /tmp
+sudo apt install --no-install-recommends -y build-essential libx11-dev wget xz-utils 2>/dev/null
+wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
+tar -xf jwm-2.4.2.tar.xz
+cd jwm-2.4.2
+./configure --prefix=/usr --disable-debug --disable-xft --disable-jpeg --disable-png
+make CFLAGS="-Os -s" -j1
+sudo make install
+cd /tmp
+rm -rf jwm-2.4.2*
 
 CURRENT_USER=$(whoami)
 
@@ -57,13 +68,12 @@ cat > ~/.jwmrc << JWM
 </JWM>
 JWM
 
-echo "Configurando VNC..."
+echo "Configurando VNC mínimo..."
 echo.
 mkdir -p ~/.vnc
-echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
-echo '#!/bin/bash
-vncserver :1 -geometry 1280x720 -dpi 144
-pcmanfm --desktop &
+echo "123456" | vncpasswd -f > ~/.vnc/passwd 2>/dev/null
+chmod 600 ~/.vnc/passwd
+echo '#!/bin/sh
 exec jwm' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
 
@@ -71,19 +81,11 @@ echo "Criando script de inicialização..."
 echo.
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
-sleep 1
-grep -q "alias vncserver=" ~/.bashrc || echo "alias vncserver='vncserver :1 -geometry 1280x720 -dpi 144'" >> ~/.bashrc && source ~/.bashrc
-vncserver :1 -geometry 1280x720 -dpi 144
-echo "✅ VNC iniciado"
-echo "Conecte em: $(hostname -I | awk "{print \$1}"):5901"
-echo "Senha: 123456"' > ~/startvnc
+vncserver :1 -geometry 1024x768 -depth 16' > ~/startvnc
 chmod +x ~/startvnc
 
-# Inicializar vncserver com o sistema
-echo "@reboot sleep 10 && vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
+echo "@reboot sleep 5 && vncserver :1 -geometry 1024x768 -depth 16" | crontab - 2>/dev/null
 
-vncserver -kill :1
-vncserver :1 -geometry 1280x720 -dpi 144
-
-echo "✅ Concluído"
+echo "✅ Instalação mínima concluída"
 echo "Use: ~/startvnc"
+echo "JWM: $(jwm -version 2>&1 | head -1)"
