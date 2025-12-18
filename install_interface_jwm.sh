@@ -1,7 +1,7 @@
 #!/bin/bash
-# install_interface_jwm.sh - VERSÃO CORRIGIDA
+# install_interface_jwm.sh - VERSÃO FINAL CORRIGIDA
 echo "==========================================="
-echo " Interface JWM + VNC - INSTALAÇÃO MÍNIMA  "
+echo " Interface JWM + VNC - INSTALAÇÃO CORRIGIDA"
 echo "==========================================="
 
 echo "Atualizando pacotes..."
@@ -33,7 +33,7 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << 'JWM'
+cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
 <!-- BARRA DE TAREFAS FUNCIONAL -->
@@ -42,7 +42,7 @@ cat > ~/.jwmrc << 'JWM'
     <Spacer/>
     <TaskList/>
     <Spacer/>
-    <TrayButton label="'$CURRENT_USER'"/>
+    <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
 
@@ -59,7 +59,7 @@ cat > ~/.jwmrc << 'JWM'
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
 </JWM>
-JWM
+EOF
 
 echo "Configurando VNC mínimo..."
 mkdir -p ~/.vnc
@@ -87,3 +87,10 @@ else
     echo "JWM (compilação mínima)"
 fi
 echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
+
+# Verificação final
+echo ""
+echo "🔍 VERIFICAÇÃO FINAL:"
+echo "Nome configurado na barra: '$CURRENT_USER'"
+echo "Para aplicar: pkill -HUP jwm"
+echo "Teste: xterm &"
