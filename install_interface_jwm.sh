@@ -3,9 +3,8 @@
 echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
 echo "==========================================="
-echo
+
 echo "Atualizando pacotes e otimizando o sistema..."
-echo.
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
 vncserver -kill :1
@@ -13,7 +12,6 @@ vncserver -kill :1
 sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
 
 echo "Instalando programas essenciais..."
-echo.
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
     pcmanfm \
@@ -28,9 +26,7 @@ sudo apt install -y --no-install-recommends \
 
 CURRENT_USER=$(whoami)
 
-echo "Instalando JWM..."
-
-# Script único para instalação 2.4.2
+echo "Instalando JWM 2.4.2"
 rm -rf jwm-install
 # mkdir jwm-install && cd jwm-install
 wget https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
@@ -40,24 +36,16 @@ cd jwm-2.4.2
 make && cd
 sudo make install
 sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
-# jwm -v
+rm -f jwm-2.4.2.tar.xz
+rm -rf jwm-2.4.2
 
-# CORREÇÃO: Usar cat com EOF para expandir variável corretamente
+echo "Configurando Barra de Tarefas"
 cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    
-    <!-- SOLUÇÃO DEFINITIVA PARA APENAS ÍCONES -->
-    <TaskList>
-        <Button width="40" height="36">
-            <Icon/>
-            <Text></Text>
-        </Button>
-    </TaskList>
-    
     <Spacer/>
     <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
@@ -76,7 +64,6 @@ cat > ~/.jwmrc << EOF
 EOF
 
 echo "Configurando VNC..."
-echo.
 mkdir -p ~/.vnc
 echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
 echo '#!/bin/bash
@@ -86,7 +73,6 @@ exec jwm' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
 
 echo "Criando script de inicialização..."
-echo.
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
 sleep 1
@@ -105,5 +91,3 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
-
