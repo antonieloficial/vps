@@ -33,7 +33,7 @@ CURRENT_USER=$(whoami)
 echo "Configurando JWM..."
 
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << "EOF"
+cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
 <!-- BARRA DE TAREFAS FUNCIONAL -->
@@ -94,3 +94,4 @@ echo "🔍 VERIFICAÇÃO FINAL:"
 echo "Nome configurado na barra: '$CURRENT_USER'"
 echo "Para aplicar: pkill -HUP jwm"
 echo "Teste: xterm &"
+
