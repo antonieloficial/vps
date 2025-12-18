@@ -31,12 +31,13 @@ CURRENT_USER=$(whoami)
 echo "Instalando JWM..."
 
 # Script único para instalação 2.4.2
-rm -rf jwm-install && mkdir jwm-install && cd jwm-install
+rm -rf jwm-install
+# mkdir jwm-install && cd jwm-install
 wget https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
 tar -xf jwm-2.4.2.tar.xz
 cd jwm-2.4.2
 ./configure --prefix=/usr/local
-make
+make && cd
 sudo make install
 sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
 # jwm -v
@@ -104,4 +105,5 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
