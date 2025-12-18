@@ -3,9 +3,9 @@
 echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO MÍNIMA  "
 echo "==========================================="
-echo
+
 echo "Atualizando pacotes..."
-echo
+
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
 
@@ -14,7 +14,6 @@ sudo timedatectl set-timezone America/Sao_Paulo 2>/dev/null || true
 sudo timedatectl set-ntp true
 
 echo "Instalando programas mínimos..."
-echo
 sudo apt install -y --no-install-recommends \
     build-essential \
     libx11-dev \
@@ -32,7 +31,7 @@ wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
 CURRENT_USER=$(whoami)
 
 echo "Configurando JWM..."
-echo
+
 mkdir -p ~/.jwm
 cat > ~/.jwmrc << JWM
 <?xml version="1.0"?>
@@ -60,7 +59,6 @@ cat > ~/.jwmrc << JWM
 JWM
 
 echo "Configurando VNC mínimo..."
-echo
 mkdir -p ~/.vnc
 echo "123456" | vncpasswd -f > ~/.vnc/passwd 2>/dev/null
 chmod 600 ~/.vnc/passwd
@@ -69,7 +67,6 @@ exec jwm' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
 
 echo "Criando script de inicialização..."
-echo
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
 vncserver :1 -geometry 1024x768 -depth 16' > ~/startvnc
@@ -80,6 +77,3 @@ echo "@reboot sleep 5 && vncserver :1 -geometry 1024x768 -depth 16" | crontab - 
 echo "✅ Instalação mínima concluída"
 echo "Use: ~/startvnc"
 echo "JWM: $(jwm -version 2>&1 | head -1)"
-
-
-
