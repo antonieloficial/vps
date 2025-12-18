@@ -4,6 +4,8 @@ echo "==========================================="
 echo " Interface JWM + VNC - INSTALAÇÃO CORRIGIDA"
 echo "==========================================="
 
+vncserver -kill :1
+
 echo "Atualizando pacotes..."
 
 sudo apt update
@@ -113,3 +115,4 @@ echo "Para testar:"
 echo "1. Execute ~/startvnc"
 echo "2. Clique na área de trabalho - nada deve acontecer"
 echo "3. Clique no botão MENU - deve abrir normalmente"
+
