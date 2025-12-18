@@ -1,90 +1,108 @@
-
 #!/bin/bash
-# install_interface_jwm.shh - VERSÃO MÍNIMA
+# install_interface_jwm.shh - VERSÃO FINAL
 echo "==========================================="
-echo " Interface JWM + VNC - INSTALAÇÃO MÍNIMA  "
+echo " Interface JWM + VNC - INSTALAÇÃO COMPLETA "
 echo "==========================================="
-
-echo "Atualizando pacotes..."
-
+echo
+echo "Atualizando pacotes e otimizando o sistema..."
+echo.
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
 
-# Corrigir hora (sem curl pesado)
-sudo timedatectl set-timezone America/Sao_Paulo 2>/dev/null || true
-sudo timedatectl set-ntp true
+# Corrigir hora
+sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
 
-echo "Instalando programas mínimos..."
+echo "Instalando programas essenciais..."
+echo.
 sudo apt install -y --no-install-recommends \
-    build-essential \
-    libx11-dev \
+    xserver-xorg-core \
+    jwm \
     pcmanfm \
     xterm \
     htop \
     wget \
-    xz-utils \
+    curl \
+    x11-xserver-utils \
     tightvncserver \
+    tigervnc-standalone-server \
     feh 2>/dev/null
-
-# INSTALAÇÃO MÍNIMA DO JWM 2.4.2
-wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz && tar -xf jwm-2.4.2.tar.xz && cd jwm-2.4.2 && ./configure --prefix=/usr --disable-nls --disable-debug --disable-xft --disable-jpeg --disable-png --disable-xpm --disable-xinerama && make CFLAGS="-Os -s" -j2 && sudo make install && cd /tmp && rm -rf jwm-2.4.2* && echo "✅ JWM instalado"
 
 CURRENT_USER=$(whoami)
 
 echo "Configurando JWM..."
-
+echo.
 mkdir -p ~/.jwm
-cat > ~/.jwmrc << JWM
+
+# CORREÇÃO: Usar cat com EOF para expandir variável corretamente
+cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
-    <TaskList/>
+    
+    <!-- SOLUÇÃO DEFINITIVA PARA APENAS ÍCONES -->
+    <TaskList>
+        <Button width="40" height="36">
+            <Icon/>
+            <Text></Text>
+        </Button>
+    </TaskList>
+    
     <Spacer/>
     <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
+
+<!-- CONFIGURAÇÃO GLOBAL PARA OCULTAR TEXTO -->
+<Group>
+    <Class>*</Class>
+    <TaskStyle>
+        <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
+        <Foreground>#00000000</Foreground>
+        <ActiveForeground>#00000000</ActiveForeground>
+    </TaskStyle>
+</Group>
+
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
     <Program label="Nano">xterm -e nano</Program>
     <Program label="PCManFM">pcmanfm /home</Program>
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
-    <Menu label="Sistema">
-        <Program label="Reiniciar Instância" confirm="Deseja realmente reiniciar a instância?">sudo reboot</Program>
-    </Menu>
+    <Program label="Reboot Instância" confirm="true">sudo reboot</Program>
     <Exit label="Logout" confirm="true"/>
 </RootMenu>
 </JWM>
-JWM
+EOF
 
-echo "Configurando VNC mínimo..."
+echo "Configurando VNC..."
+echo.
 mkdir -p ~/.vnc
-echo "123456" | vncpasswd -f > ~/.vnc/passwd 2>/dev/null
-vncpasswd
-chmod 600 ~/.vnc/passwd
-echo '#!/bin/sh
+echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
+echo '#!/bin/bash
+vncserver :1 -geometry 1280x720 -dpi 144
+pcmanfm --desktop &
 exec jwm' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup
 
 echo "Criando script de inicialização..."
+echo.
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
-vncserver :1 -geometry 1024x768 -depth 16' > ~/startvnc
+sleep 1
+grep -q "alias vncserver=" ~/.bashrc || echo "alias vncserver='vncserver :1 -geometry 1280x720 -dpi 144'" >> ~/.bashrc && source ~/.bashrc
+vncserver :1 -geometry 1280x720 -dpi 144
+echo "✅ VNC iniciado"
+echo "Conecte em: $(hostname -I | awk "{print \$1}"):5901"
+echo "Senha: 123456"' > ~/startvnc
 chmod +x ~/startvnc
 
-echo "@reboot sleep 5 && vncserver :1 -geometry 1024x768 -depth 16" | crontab - 2>/dev/null
+# Inicializar vncserver com o sistema
+echo "@reboot sleep 10 && vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
 
-echo "✅ Instalação mínima concluída"
+vncserver -kill :1
+vncserver :1 -geometry 1280x720 -dpi 144
+
+echo "✅ Concluído"
 echo "Use: ~/startvnc"
-if strings /usr/bin/jwm 2>/dev/null | grep -q "JWM v2.4.2"; then
-    echo "JWM v2.4.2"
-else
-    echo "JWM (compilação mínima)"
-fi
-echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
-
-
-
-
