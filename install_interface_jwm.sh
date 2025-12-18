@@ -38,6 +38,8 @@ mkdir -p ~/.jwm
 cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
+<RootButtons></RootButtons> <!-- CORREÇÃO: Remove ação de clique na área de trabalho -->
+
 <!-- BARRA DE TAREFAS FUNCIONAL -->
 <Tray x="0" y="-1" height="36" autohide="off">
     <TrayButton label="   MENU   ">root:1</TrayButton>
@@ -96,7 +98,3 @@ echo "🔍 VERIFICAÇÃO FINAL:"
 echo "Nome configurado na barra: '$CURRENT_USER'"
 echo "Para aplicar: pkill -HUP jwm"
 echo "Teste: xterm &"
-
-
-
-
