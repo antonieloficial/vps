@@ -16,7 +16,8 @@ sudo timedatectl set-ntp true
 echo "Instalando programas mínimos..."
 echo.
 sudo apt install -y --no-install-recommends \
-    xserver-xorg-core \
+    build-essential \
+    libx11-dev \
     pcmanfm \
     xterm \
     htop \
@@ -26,17 +27,9 @@ sudo apt install -y --no-install-recommends \
     feh 2>/dev/null
 
 # INSTALAÇÃO MÍNIMA DO JWM 2.4.2
-echo "Instalando JWM 2.4.2 mínimo..."
-cd /tmp
-sudo apt install --no-install-recommends -y build-essential libx11-dev wget xz-utils 2>/dev/null
-wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
-tar -xf jwm-2.4.2.tar.xz
-cd jwm-2.4.2
-./configure --prefix=/usr --disable-debug --disable-xft --disable-jpeg --disable-png
-make CFLAGS="-Os -s" -j1
-sudo make install
-cd /tmp
-rm -rf jwm-2.4.2*
+#cd /tmp && sudo apt update && sudo apt install --no-install-recommends -y build-essential libx11-dev 
+
+wget xz-utils && wget -q https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz && tar -xf jwm-2.4.2.tar.xz && cd jwm-2.4.2 && ./configure --prefix=/usr --disable-nls --disable-debug --disable-xft --disable-jpeg --disable-png --disable-xpm --disable-xinerama && make CFLAGS="-Os -s" -j2 && sudo make install && cd /tmp && rm -rf jwm-2.4.2* && echo "✅ JWM $(jwm -version 2>&1 | head -1) instalado. Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
 
 CURRENT_USER=$(whoami)
 
@@ -89,3 +82,4 @@ echo "@reboot sleep 5 && vncserver :1 -geometry 1024x768 -depth 16" | crontab - 
 echo "✅ Instalação mínima concluída"
 echo "Use: ~/startvnc"
 echo "JWM: $(jwm -version 2>&1 | head -1)"
+
