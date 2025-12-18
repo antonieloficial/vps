@@ -16,7 +16,6 @@ echo "Instalando programas essenciais..."
 echo.
 sudo apt install -y --no-install-recommends \
     xserver-xorg-core \
-    jwm \
     pcmanfm \
     xterm \
     htop \
@@ -29,9 +28,18 @@ sudo apt install -y --no-install-recommends \
 
 CURRENT_USER=$(whoami)
 
-echo "Configurando JWM..."
-echo.
-mkdir -p ~/.jwm
+echo "Instalando JWM..."
+
+# Script único para instalação 2.4.2
+cd /tmp && rm -rf jwm-install && mkdir jwm-install && cd jwm-install
+wget https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
+tar -xf jwm-2.4.2.tar.xz
+cd jwm-2.4.2
+./configure --prefix=/usr/local
+make
+sudo make install
+sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
+# jwm -v
 
 # CORREÇÃO: Usar cat com EOF para expandir variável corretamente
 cat > ~/.jwmrc << EOF
@@ -53,16 +61,6 @@ cat > ~/.jwmrc << EOF
     <TrayButton label="$CURRENT_USER"/>
     <Clock format="%H:%M"/>
 </Tray>
-
-<!-- CONFIGURAÇÃO GLOBAL PARA OCULTAR TEXTO -->
-<Group>
-    <Class>*</Class>
-    <TaskStyle>
-        <Font>-*-fixed-*-*-*-*-0-*-*-*-*-*-*-*</Font>
-        <Foreground>#00000000</Foreground>
-        <ActiveForeground>#00000000</ActiveForeground>
-    </TaskStyle>
-</Group>
 
 <RootMenu onroot="1" label="Menu">
     <Program label="Htop">xterm -e htop</Program>
@@ -106,4 +104,3 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
