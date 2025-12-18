@@ -60,7 +60,7 @@ JWM
 
 echo "Configurando VNC mínimo..."
 mkdir -p ~/.vnc
-echo "123456" | vncpasswd -f > ~/.vnc/passwd 2>/dev/null
+echo "12345678" | vncpasswd -f > ~/.vnc/passwd 2>/dev/null
 chmod 600 ~/.vnc/passwd
 echo '#!/bin/sh
 exec jwm' > ~/.vnc/xstartup
@@ -82,4 +82,5 @@ else
     echo "JWM (compilação mínima)"
 fi
 echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
+
 
