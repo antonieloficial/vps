@@ -70,6 +70,7 @@ chmod +x ~/.vnc/xstartup
 echo "Criando script de inicialização..."
 echo '#!/bin/bash
 vncserver -kill :1 2>/dev/null
+grep -q "alias vncserver=" ~/.bashrc || echo "alias vncserver='vncserver :1 -geometry 1024x768 -dpi 144'" >> ~/.bashrc && source ~/.bashrc
 vncserver :1 -geometry 1024x768 -depth 16' > ~/startvnc
 chmod +x ~/startvnc
 
@@ -83,6 +84,7 @@ else
     echo "JWM (compilação mínima)"
 fi
 echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
+
 
 
 
