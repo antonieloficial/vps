@@ -76,4 +76,10 @@ echo "@reboot sleep 5 && vncserver :1 -geometry 1024x768 -depth 16" | crontab - 
 
 echo "✅ Instalação mínima concluída"
 echo "Use: ~/startvnc"
-echo "JWM: $(jwm -version 2>&1 | head -1)"
+if strings /usr/bin/jwm 2>/dev/null | grep -q "JWM v2.4.2"; then
+    echo "JWM v2.4.2"
+else
+    echo "JWM (compilação mínima)"
+fi
+echo "Tamanho: $(ls -lh /usr/bin/jwm | awk '{print $5}')"
+
