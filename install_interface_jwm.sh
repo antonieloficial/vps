@@ -39,6 +39,9 @@ sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
 rm -f jwm-2.4.2.tar.xz
 rm -rf jwm-2.4.2
 
+# Mudar cor de fundo do desktop
+setsid bash -c 'C="#2D3775"; DISPLAY=:1 xsetroot -solid "$C"; pkill -9 pcmanfm; sleep 0.5; echo -e "[*]\nwallpaper=none\nwallpaper_mode=none\ndesktop_bg=$C" > ~/.config/pcmanfm/default/desktop-items-0.conf; pcmanfm --desktop --wallpaper-mode=none' &>/dev/null &
+
 echo "Configurando Barra de Tarefas"
 cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
@@ -92,6 +95,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
