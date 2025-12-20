@@ -59,7 +59,6 @@ cat > ~/.jwmrc << XML
     <Restart label="Reiniciar JWM"/>
     <Menu label="Sistema">
         <Program label="Reiniciar">xterm -title "Reiniciando..." -e "echo 'Reiniciando sistema em 3 segundos...'; sleep 3; sudo reboot"</Program>
-        <Program label="Desligar">xterm -title "Desligando..." -e "echo 'Desligando sistema em 3 segundos...'; sleep 3; sudo shutdown -h now"</Program>
     </Menu>
 </RootMenu>
 </JWM>
@@ -114,6 +113,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
