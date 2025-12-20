@@ -65,21 +65,6 @@ XML
 export DISPLAY=:1
 jwm > /dev/null 2>&1 &
 
-# Mudar cor de fundo do desktop
-setsid bash -c '
-export DISPLAY=":1" && \
-COLOR="#111836" && \
-xsetroot -solid "$COLOR" && \
-pkill -9 pcmanfm 2>/dev/null; \
-sleep 0.5 && \
-rm -f ~/.config/pcmanfm/default/desktop-items-*.conf && \
-echo "[*]" > ~/.config/pcmanfm/default/desktop-items-0.conf && \
-echo "wallpaper=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
-echo "wallpaper_mode=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
-echo "desktop_bg=$COLOR" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
-pcmanfm --desktop --wallpaper-mode=none --set-wallpaper="none"
-' </dev/null >/dev/null 2>&1 &
-
 sudo apt install tightvncserver tigervnc-standalone-server -y    
 
 echo "Configurando VNC..."
@@ -102,11 +87,27 @@ echo "Conecte em: $(hostname -I | awk "{print \$1}"):5901"
 echo "Senha: 123456"' > ~/startvnc
 chmod +x ~/startvnc
 
+# Mudar cor de fundo do desktop
+setsid bash -c '
+export DISPLAY=":1" && \
+COLOR="#111836" && \
+xsetroot -solid "$COLOR" && \
+pkill -9 pcmanfm 2>/dev/null; \
+sleep 0.5 && \
+rm -f ~/.config/pcmanfm/default/desktop-items-*.conf && \
+echo "[*]" > ~/.config/pcmanfm/default/desktop-items-0.conf && \
+echo "wallpaper=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
+echo "wallpaper_mode=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
+echo "desktop_bg=$COLOR" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
+pcmanfm --desktop --wallpaper-mode=none --set-wallpaper="none"
+' </dev/null >/dev/null 2>&1 &
+
 # Inicializar vncserver com o sistema
-echo "@reboot sleep 10 && vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
+echo "@reboot sleep 10 && vncserver :1 -geometry 1024x768 -depth 16" | crontab -
 
 vncserver -kill :1
 vncserver :1 -geometry 1024x768 -depth 16
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
