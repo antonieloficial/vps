@@ -38,21 +38,6 @@ sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
 #rm -f jwm-2.4.2.tar.xz
 #rm -rf jwm-2.4.2
 
-# Mudar cor de fundo do desktop
-setsid bash -c '
-export DISPLAY=":1" && \
-COLOR="#111836" && \
-xsetroot -solid "$COLOR" && \
-pkill -9 pcmanfm 2>/dev/null; \
-sleep 0.5 && \
-rm -f ~/.config/pcmanfm/default/desktop-items-*.conf && \
-echo "[*]" > ~/.config/pcmanfm/default/desktop-items-0.conf && \
-echo "wallpaper=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
-echo "wallpaper_mode=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
-echo "desktop_bg=$COLOR" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
-pcmanfm --desktop --wallpaper-mode=none --set-wallpaper="none"
-' </dev/null >/dev/null 2>&1 &
-
 echo "Configurando Barra de Tarefas"
 #rm -f ~/.jwmrc
 cat > ~/.jwmrc << EOF
@@ -78,6 +63,21 @@ cat > ~/.jwmrc << EOF
 </RootMenu>
 </JWM>
 EOF
+
+# Mudar cor de fundo do desktop
+setsid bash -c '
+export DISPLAY=":1" && \
+COLOR="#111836" && \
+xsetroot -solid "$COLOR" && \
+pkill -9 pcmanfm 2>/dev/null; \
+sleep 0.5 && \
+rm -f ~/.config/pcmanfm/default/desktop-items-*.conf && \
+echo "[*]" > ~/.config/pcmanfm/default/desktop-items-0.conf && \
+echo "wallpaper=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
+echo "wallpaper_mode=none" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
+echo "desktop_bg=$COLOR" >> ~/.config/pcmanfm/default/desktop-items-0.conf && \
+pcmanfm --desktop --wallpaper-mode=none --set-wallpaper="none"
+' </dev/null >/dev/null 2>&1 &
 
 sudo apt install tightvncserver tigervnc-standalone-server -y    
 
@@ -109,6 +109,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
