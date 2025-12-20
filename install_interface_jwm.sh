@@ -73,7 +73,7 @@ cat > ~/.jwmrc << EOF
     <Program label="Terminal">xterm</Program>
     <Restart label="Reiniciar JWM"/>
     <Menu label="Sistema">
-        <Exit label="Reiniciar" confirm="true">sudo reboot/>
+        <Program label="Reiniciar">sudo reboot</Program>
     </Menu>
 </RootMenu>
 </JWM>
@@ -107,6 +107,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
