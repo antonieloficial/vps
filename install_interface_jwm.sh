@@ -29,6 +29,9 @@ echo "Instalando limpa do JWM 2.3.7"
 pkill jwm 2>/dev/null
 sudo apt remove --purge jwm -y 2>/dev/null
 sudo rm -f /usr/local/bin/jwm 2>/dev/null
+sudo rm -rf /etc/jwm 2>/dev/null
+sudo rm -rf /usr/share/jwm 2>/dev/null
+sudo rm -rf /usr/local/share/jwm 2>/dev/null
 rm -f ~/.jwmrc 2>/dev/null
 
 #sudo apt update
@@ -113,6 +116,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
