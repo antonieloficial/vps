@@ -55,6 +55,7 @@ pcmanfm --desktop --wallpaper-mode=none --set-wallpaper="none"
 ' </dev/null >/dev/null 2>&1 &
 
 echo "Configurando Barra de Tarefas"
+rm -f ~/.jwmrc
 cat > ~/.jwmrc << EOF
 <?xml version="1.0"?>
 <JWM>
@@ -107,6 +108,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
