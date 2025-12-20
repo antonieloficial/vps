@@ -31,7 +31,7 @@ sudo apt remove --purge jwm -y 2>/dev/null
 sudo rm -f /usr/local/bin/jwm 2>/dev/null
 rm -f ~/.jwmrc 2>/dev/null
 
-sudo apt update
+#sudo apt update
 sudo apt install jwm -y
 
 echo "Configurando JWM..."
@@ -114,6 +114,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
