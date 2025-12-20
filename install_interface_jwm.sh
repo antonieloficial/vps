@@ -20,7 +20,6 @@ sudo apt install -y --no-install-recommends \
     wget \
     curl \
     x11-xserver-utils \
-    tightvncserver \
     tigervnc-standalone-server \
     feh 2>/dev/null
 
@@ -36,8 +35,8 @@ cd jwm-2.4.2
 make && cd
 sudo make install
 sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
-rm -f jwm-2.4.2.tar.xz
-rm -rf jwm-2.4.2
+#rm -f jwm-2.4.2.tar.xz
+#rm -rf jwm-2.4.2
 
 # Mudar cor de fundo do desktop
 setsid bash -c '
@@ -80,6 +79,8 @@ cat > ~/.jwmrc << EOF
 </JWM>
 EOF
 
+sudo apt install tightvncserver tigervnc-standalone-server -y    
+
 echo "Configurando VNC..."
 mkdir -p ~/.vnc
 echo -e "123456\n123456\nn" | vncpasswd >/dev/null 2>&1
@@ -108,6 +109,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
