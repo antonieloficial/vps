@@ -25,29 +25,29 @@ sudo apt install -y --no-install-recommends \
 
 CURRENT_USER=$(whoami)
 
-echo "Instalando JWM 2.4.2"
-rm -rf jwm-install
-# mkdir jwm-install && cd jwm-install
-wget https://github.com/joewing/jwm/releases/download/v2.4.2/jwm-2.4.2.tar.xz
-tar -xf jwm-2.4.2.tar.xz
-cd jwm-2.4.2
-./configure --prefix=/usr/local
-make && cd
-sudo make install
-sudo ln -sf /usr/local/bin/jwm /usr/bin/jwm  # Cria link simbólico
-#rm -f jwm-2.4.2.tar.xz
-#rm -rf jwm-2.4.2
+echo "Instalando limpa do JWM 2.3.7"
+pkill jwm 2>/dev/null
+sudo apt remove --purge jwm -y 2>/dev/null
+sudo rm -f /usr/local/bin/jwm 2>/dev/null
+rm -f ~/.jwmrc 2>/dev/null
 
-echo "Configurando Barra de Tarefas"
-#rm -f ~/.jwmrc
-cat > ~/.jwmrc << EOF
+sudo apt update
+sudo apt install jwm -y
+
+echo "Configurando JWM..."
+pkill jwm 2>/dev/null
+
+USER=$(whoami)
+HOST=$(hostname -s)
+
+cat > ~/.jwmrc << XML
 <?xml version="1.0"?>
 <JWM>
 <Tray x="0" y="-1" height="40">
     <TrayButton label="   MENU   ">root:1</TrayButton>
     <Spacer/>
     <Spacer/>
-    <TrayButton label="$CURRENT_USER"/>
+    <TrayButton label="$USER"/>
     <Clock format="%H:%M"/>
 </Tray>
 
@@ -59,10 +59,15 @@ cat > ~/.jwmrc << EOF
     <Restart label="Reiniciar JWM"/>
     <Menu label="Sistema">
         <Program label="Reiniciar">xterm -title "Reiniciando..." -e "echo 'Reiniciando sistema em 3 segundos...'; sleep 3; sudo reboot"</Program>
+        <Program label="Desligar">xterm -title "Desligando..." -e "echo 'Desligando sistema em 3 segundos...'; sleep 3; sudo shutdown -h now"</Program>
     </Menu>
 </RootMenu>
 </JWM>
-EOF
+XML
+
+# Iniciar JWM
+export DISPLAY=:1
+jwm > /dev/null 2>&1 &
 
 # Mudar cor de fundo do desktop
 setsid bash -c '
@@ -109,6 +114,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
