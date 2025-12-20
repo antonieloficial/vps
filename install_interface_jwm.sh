@@ -29,7 +29,8 @@ echo "Instalando limpa do JWM 2.3.7"
 #pkill jwm 2>/dev/null
 pkill -9 jwm 2>/dev/null
 #pkill -HUP jwm
-sudo apt remove --purge jwm -y && sudo rm -rf /etc/jwm
+#sudo apt remove --purge jwm -y && sudo rm -rf /etc/jwm
+sudo dpkg --purge jwm >/dev/null 2>&1; sudo rm -rf /etc/jwm; echo "✅ Removido"
 #sudo apt remove --purge jwm -y 2>/dev/null
 #sudo rm -f /usr/local/bin/jwm 2>/dev/null
 #sudo rm -rf /etc/jwm 2>/dev/null
@@ -120,6 +121,7 @@ vncserver :1 -geometry 1280x720 -dpi 144
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
