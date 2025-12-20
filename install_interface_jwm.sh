@@ -26,20 +26,9 @@ sudo apt install -y --no-install-recommends \
 CURRENT_USER=$(whoami)
 
 echo "Instalando limpa do JWM 2.3.7"
-#pkill jwm 2>/dev/null
 pkill -9 jwm 2>/dev/null
-#pkill -HUP jwm
-#sudo apt remove --purge jwm -y && sudo rm -rf /etc/jwm
-sudo dpkg --purge jwm >/dev/null 2>&1; sudo rm -rf /etc/jwm; echo "✅ Removido"
-#sudo apt remove --purge jwm -y 2>/dev/null
-#sudo rm -f /usr/local/bin/jwm 2>/dev/null
-#sudo rm -rf /etc/jwm 2>/dev/null
-#sudo rm -rf /usr/share/jwm 2>/dev/null
-#sudo rm -rf /usr/local/share/jwm 2>/dev/null
-
+sudo apt remove --purge jwm -y && sudo rm -rf /etc/jwm
 rm -f ~/.jwmrc 2>/dev/null
-
-#sudo apt update
 sudo apt install jwm -y
 
 echo "Configurando JWM..."
@@ -121,26 +110,3 @@ vncserver :1 -geometry 1024x768 -depth 16
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
