@@ -117,10 +117,11 @@ chmod +x ~/startvnc
 echo "@reboot sleep 10 && vncserver :1 -geometry 1280x720 -dpi 144" | crontab -
 
 vncserver -kill :1
-vncserver :1 -geometry 640x480 -dpi 144
+vncserver :1 -geometry 1024x768 -depth 16
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
 
 
