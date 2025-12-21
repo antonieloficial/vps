@@ -108,6 +108,7 @@ echo "@reboot sleep 10 && vncserver :1 -geometry 1024x768 -depth 16" | crontab -
 vncserver -kill :1
 vncserver :1 -geometry 1024x768 -depth 16
 
+setsid bash -c 'export DISPLAY=:1 COLOR=#2d3775; xsetroot -solid $COLOR; pkill -9 pcmanfm; sleep 0.5; echo -e "[*]\nwallpaper=none\nwallpaper_mode=none\ndesktop_bg=$COLOR" >~/.config/pcmanfm/default/desktop-items-0.conf; pcmanfm --desktop' &>/dev/null &
+
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
-
