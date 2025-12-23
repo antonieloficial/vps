@@ -7,6 +7,7 @@ echo "==========================================="
 echo "Atualizando pacotes e otimizando o sistema..."
 sudo apt update
 sudo apt purge plymouth snapd modemmanager -y
+sudo apt install nano -y
 vncserver -kill :1
 # Corrigir hora
 sudo timedatectl set-timezone $(curl -s http://ip-api.com/line?fields=timezone) && sudo timedatectl set-ntp true && sudo systemctl restart systemd-timesyncd && sleep 3 && sudo hwclock --systohc
@@ -111,31 +112,18 @@ vncserver :1 -geometry 1024x768 -depth 16
 setsid bash -c 'export DISPLAY=:1 COLOR=#2d3775; xsetroot -solid $COLOR; pkill -9 pcmanfm; sleep 0.5; echo -e "[*]\nwallpaper=none\nwallpaper_mode=none\ndesktop_bg=$COLOR" >~/.config/pcmanfm/default/desktop-items-0.conf; pcmanfm --desktop' &>/dev/null &
 
 # Abrir apps do terminal externo
-cat > ~/open-in-vps-gui << 'EOF'
-#!/bin/bash
-# Detecta e usa o display onde a interface gráfica está rodando
-# Uso: open-in-vps-gui <programa> [argumentos]
+# Adicionar estas linhas ao final do ~/.bashrc
+echo '# Configuração permanente do DISPLAY' >> ~/.bashrc
+echo 'export DISPLAY=:1' >> ~/.bashrc
+echo 'export QT_XCB_FORCE_SOFTWARE_OPENGL=1' >> ~/.bashrc
+echo 'echo "✅ DISPLAY configurado para: $DISPLAY"' >> ~/.bashrc
 
-# Método 1: Verifica quem está no console (:0 ou :1)
-if [ -e /tmp/.X0-lock ]; then
-    DISPLAY_VPS=":0"
-elif [ -e /tmp/.X1-lock ]; then
-    DISPLAY_VPS=":1"
-else
-    # Método 2: Procura por processos de janela
-    DISPLAY_VPS=$(ps aux | grep -E "Xorg|X.*:([0-9]+)" | grep -v grep | \
-                  sed -n 's/.*:\([0-9]\+\) .*/\1/p' | head -1)
-    DISPLAY_VPS=":${DISPLAY_VPS:-1}"
-fi
-
-echo "Usando display da VPS: $DISPLAY_VPS"
-echo "Abrindo: $@"
-
-DISPLAY=$DISPLAY_VPS "$@" &
-EOF
+# Recarregar configuração
+source ~/.bashrc
 
 chmod +x ~/open-in-vps-gui
 
 echo "✅ Concluído"
 echo "Use: ~/startvnc"
+
 
